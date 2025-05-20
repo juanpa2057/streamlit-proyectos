@@ -5,7 +5,7 @@ import os
 import hashlib
 
 #from dotenv import load_dotenv
-xload_dotenv()
+#load_dotenv()
 
 st.set_page_config(page_title="Buscador de Proyectos", layout="wide")
 
