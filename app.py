@@ -4,9 +4,6 @@ import json
 import os
 import hashlib
 
-#from dotenv import load_dotenv
-#load_dotenv()
-
 st.set_page_config(page_title="Buscador de Proyectos", layout="wide")
 
 # -------------------- AUTENTICACIÓN CON VARIABLES DE ENTORNO --------------------
@@ -38,19 +35,16 @@ if st.button("Cerrar Sesión"):
     st.experimental_set_query_params(logged_in="false")
     st.rerun()
 
-# -------------------- RUTA DEL ARCHIVO LOCAL --------------------
-RUTA_EXCEL = "/Users/jpocampo/Library/CloudStorage/OneDrive-CELSIAS.AE.S.P/Desarrollo de producto - 2. Seguimiento Leads SFV/Consolidado.xlsx"
+# -------------------- CARGA DE ARCHIVO DESDE GITHUB --------------------
+RUTA_EXCEL = "https://raw.githubusercontent.com/juanpa2057/streamlit-proyectos/main/Consolidado.xlsx"
 
 def cargar_datos(ruta_excel):
-    if not os.path.exists(ruta_excel):
-        st.error("❌ No se encontró el archivo. Asegúrate de que está sincronizado desde OneDrive.")
-        return pd.DataFrame()
     try:
         df = pd.read_excel(ruta_excel)
         df.columns = df.columns.str.strip()
         return df
     except Exception as e:
-        st.error(f"⚠️ Error al leer el archivo: {e}")
+        st.error(f"⚠️ Error al leer el archivo desde GitHub: {e}")
         return pd.DataFrame()
 
 df = cargar_datos(RUTA_EXCEL)
@@ -89,3 +83,4 @@ if not df.empty:
             st.warning("⚠️ No se encontraron resultados con ese criterio.")
 else:
     st.stop()
+
